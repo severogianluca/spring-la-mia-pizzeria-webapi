@@ -2,8 +2,9 @@ package org.lessons.java.spring_la_mia_pizzeria_crud.model;
 
 import java.time.LocalDate;
 
-import org.springframework.boot.autoconfigure.web.WebProperties.Resources.Chain.Strategy;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +25,7 @@ public class OffertaSpecialeModel {
     private Integer id;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "pizza_id", nullable = false)
     private PizzaModel pizza;
 
