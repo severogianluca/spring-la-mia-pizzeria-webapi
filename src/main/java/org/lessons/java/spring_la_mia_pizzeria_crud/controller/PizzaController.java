@@ -1,114 +1,114 @@
-package org.lessons.java.spring_la_mia_pizzeria_crud.controller;
+// package org.lessons.java.spring_la_mia_pizzeria_crud.controller;
 
-import java.util.List;
+// import java.util.List;
 
-import org.lessons.java.spring_la_mia_pizzeria_crud.model.OffertaSpecialeModel;
-import org.lessons.java.spring_la_mia_pizzeria_crud.model.PizzaModel;
-import org.lessons.java.spring_la_mia_pizzeria_crud.repository.IngredienteRepository;
-import org.lessons.java.spring_la_mia_pizzeria_crud.repository.OffertaSpecialeRepository;
-import org.lessons.java.spring_la_mia_pizzeria_crud.repository.PizzaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+// import org.lessons.java.spring_la_mia_pizzeria_crud.model.OffertaSpecialeModel;
+// import org.lessons.java.spring_la_mia_pizzeria_crud.model.PizzaModel;
+// import org.lessons.java.spring_la_mia_pizzeria_crud.repository.IngredienteRepository;
 
-import jakarta.validation.Valid;
+// import org.lessons.java.spring_la_mia_pizzeria_crud.service.PizzaService;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Controller;
+// import org.springframework.ui.Model;
+// import org.springframework.validation.BindingResult;
+// import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.ModelAttribute;
+// import org.springframework.web.bind.annotation.PathVariable;
+// import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller
-@RequestMapping("/")
-public class PizzaController {
+// import jakarta.validation.Valid;
 
-    @Autowired
-    private PizzaRepository pizzaRepo;
-    @Autowired
-    private IngredienteRepository ingredienteRepository;
+// @Controller
+// @RequestMapping("/")
+// public class PizzaController {
 
-    @GetMapping
-    public String home(Model model) {
-        return "home";
-    }
+//     @Autowired
+//     private PizzaService pizzaService;
+//     @Autowired
+//     private IngredienteRepository ingredienteRepository;
 
-    @GetMapping("/pizzas")
-    public String getListaPizzas(Model model) {
-        List<PizzaModel> pizzas = pizzaRepo.findAll();
+//     @GetMapping
+//     public String home(Model model) {
+//         return "home";
+//     }
 
-        model.addAttribute("pizzas", pizzas);
-        return "pizzas/index";
-    }
+//     @GetMapping("/pizzas")
+//     public String getListaPizzas(Model model) {
+//         List<PizzaModel> pizzas = pizzaService.findAll();
 
-    @GetMapping("/pizzas/{id}")
-    public String getPizzaById(@PathVariable("id") int id, Model model) {
-        model.addAttribute("pizza", pizzaRepo.findById(id).get());
-        model.addAttribute("ingredienti", ingredienteRepository.findAll());
+//         model.addAttribute("pizzas", pizzas);
+//         return "pizzas/index";
+//     }
 
-        return "pizzas/show";
-    }
+//     @GetMapping("/pizzas/{id}")
+//     public String getPizzaById(@PathVariable("id") int id, Model model) {
+//         model.addAttribute("pizza", pizzaService.findById(id));
+//         model.addAttribute("ingredienti", ingredienteRepository.findAll());
 
-    @GetMapping("/search")
-    public String searchTitle(@RequestParam String nome, Model model) {
-        List<PizzaModel> pizzas = pizzaRepo.findByNomeContaining(nome);
-        model.addAttribute("pizzas", pizzas);
-        return "pizzas/index";
-    }
+//         return "pizzas/show";
+//     }
 
-    @GetMapping("/pizzas/create")
-    public String create(Model model) {
-        model.addAttribute("pizza", new PizzaModel());
-        model.addAttribute("ingredienti", ingredienteRepository.findAll());
-        return "pizzas/create";
-    }
+//     @GetMapping("/search")
+//     public String searchTitle(@RequestParam String nome, Model model) {
+//         List<PizzaModel> pizzas = pizzaService.findByname(nome);
+//         model.addAttribute("pizzas", pizzas);
+//         return "pizzas/index";
+//     }
 
-    @PostMapping("/pizzas/create")
-    public String store(@Valid @ModelAttribute("pizza") PizzaModel formPizza, BindingResult bindingResult,
-            Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("ingredienti", ingredienteRepository.findAll());
-            return "pizzas/create";
-        }
-        pizzaRepo.save(formPizza);
-        return "redirect:/pizzas";
-    }
+//     @GetMapping("/pizzas/create")
+//     public String create(Model model) {
+//         model.addAttribute("pizza", new PizzaModel());
+//         model.addAttribute("ingredienti", ingredienteRepository.findAll());
+//         return "pizzas/create";
+//     }
 
-    @GetMapping("/pizzas/edit/{id}")
-    public String edit(@PathVariable Integer id, Model model) {
-        model.addAttribute("pizza", pizzaRepo.findById(id).get());
-        model.addAttribute("ingredienti", ingredienteRepository.findAll());
+//     @PostMapping("/pizzas/create")
+//     public String store(@Valid @ModelAttribute("pizza") PizzaModel formPizza, BindingResult bindingResult,
+//             Model model) {
+//         if (bindingResult.hasErrors()) {
+//             model.addAttribute("ingredienti", ingredienteRepository.findAll());
+//             return "pizzas/create";
+//         }
+//         pizzaService.save(formPizza);
+//         return "redirect:/pizzas";
+//     }
 
-        return "pizzas/edit";
-    }
+//     @GetMapping("/pizzas/edit/{id}")
+//     public String edit(@PathVariable Integer id, Model model) {
+//         model.addAttribute("pizza", pizzaService.findById(id));
+//         model.addAttribute("ingredienti", ingredienteRepository.findAll());
 
-    @PostMapping("/pizzas/edit/{id}")
-    public String update(@Valid @ModelAttribute("pizza") PizzaModel formPizza, BindingResult bindingResult,
-            Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("ingredienti", ingredienteRepository.findAll());
-            return "pizzas/edit";
-        }
-        pizzaRepo.save(formPizza);
-        return "redirect:/pizzas";
-    }
+//         return "pizzas/edit";
+//     }
 
-    @PostMapping("pizzas/delete/{id}")
-    public String delete(@PathVariable Integer id) {
-        pizzaRepo.deleteById(id);
-        return "redirect:/pizzas";
-    }
+//     @PostMapping("/pizzas/edit/{id}")
+//     public String update(@Valid @ModelAttribute("pizza") PizzaModel formPizza, BindingResult bindingResult,
+//             Model model) {
+//         if (bindingResult.hasErrors()) {
+//             model.addAttribute("ingredienti", ingredienteRepository.findAll());
+//             return "pizzas/edit";
+//         }
+//         pizzaService.save(formPizza);
+//         return "redirect:/pizzas";
+//     }
 
-    @GetMapping("/pizzas/{id}/offerta")
-    public String offerta(@PathVariable Integer id, Model model) {
-        OffertaSpecialeModel offertaSpeciale = new OffertaSpecialeModel();
+//     @PostMapping("pizzas/delete/{id}")
+//     public String delete(@PathVariable Integer id) {
+//         pizzaService.deleteById(id);
+//         return "redirect:/pizzas";
+//     }
 
-        PizzaModel pizza = pizzaRepo.findById(id).get();
-        offertaSpeciale.setPizza(pizzaRepo.findById(id).get());
+//     @GetMapping("/pizzas/{id}/offerta")
+//     public String offerta(@PathVariable Integer id, Model model) {
+//         OffertaSpecialeModel offertaSpeciale = new OffertaSpecialeModel();
 
-        model.addAttribute("offertaSpeciale", offertaSpeciale);
-        model.addAttribute("pizza", pizza);
-        return "offertaSpeciale/create";
-    }
-}
+//         PizzaModel pizza = pizzaService.findById(id);
+//         offertaSpeciale.setPizza(pizzaService.findById(id));
+
+//         model.addAttribute("offertaSpeciale", offertaSpeciale);
+//         model.addAttribute("pizza", pizza);
+//         return "offertaSpeciale/create";
+//     }
+// }

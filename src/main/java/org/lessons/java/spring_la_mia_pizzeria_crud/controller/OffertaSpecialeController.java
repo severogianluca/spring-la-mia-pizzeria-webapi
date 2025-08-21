@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("offerta")
+@RequestMapping("/offerta")
 public class OffertaSpecialeController {
 
     @Autowired

@@ -46,7 +46,6 @@ public class PizzaModel {
     private BigDecimal prezzo;
 
     @OneToMany(mappedBy = "pizza", cascade = { CascadeType.ALL})
-    @JsonManagedReference
     private List<OffertaSpecialeModel> offerteSpeciali;
 
     @ManyToMany
@@ -75,9 +74,9 @@ public class PizzaModel {
         return id;
     }
 
-    // public void setId(Integer id) {
-    //     this.id = id;
-    // }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
