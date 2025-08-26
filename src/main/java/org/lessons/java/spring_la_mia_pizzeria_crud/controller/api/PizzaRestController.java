@@ -1,4 +1,4 @@
-package org.lessons.java.spring_la_mia_pizzeria_crud.controller;
+package org.lessons.java.spring_la_mia_pizzeria_crud.controller.api;
 
 import java.util.List;
 import java.util.Optional;
